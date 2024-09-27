@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Account Creation and Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+.profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.profile-container img {
+  margin-right: 10px; // Adjust the margin as needed
+}
+</style>
+<body>
+  <div id="account-creation">
+    <h2>Account (not mobile supported)</h2>
+    <form id="account-form">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit">Create Account</button>
+    </form>
+  </div>
+
+  <div id="profile" style="display: none;">
+    <h2></h2>
+   <button id="logout-button">Delete Account</button>
+    <img id="profile-pic" src="https://yt3.ggpht.com/qZB57O7XiGy2VfuwMGjAb1Ag_Cqc9jc5_AkB0ZtQKnJYwinoYMjFiEQgFzOcXyK2k5_lUnpyiw=s108-c-k-c0x00ffffff-no-rj" alt="Profile Picture">
+    <label for="profile-pic-upload"></label>
+    <input type="file" id="profile-pic-upload" accept="image/*">
+<h1 id="profile-username" class="impact-font"span id="profile-username"></span></h1>
+  </div>
+
+  <link rel="stylesheet" href="style.css">
+  <script>
+const accountForm = document.getElementById('account-form');
+const profileSection = document.getElementById('profile');
+const profileUsername = document.getElementById('profile-username');
+const profilePic = document.getElementById('profile-pic');
+const logoutButton = document.getElementById('logout-button'); // Assuming this exists in your HTML
+
+// Load username and profile picture from local storage on page load
+const storedUsername = localStorage.getItem('username');
+const storedProfilePic = localStorage.getItem('profilePic');
+
+if (storedUsername) {
+  profileUsername.textContent = storedUsername;
+  profilePic.src = storedProfilePic;
+  accountForm.style.display = 'none';
+  profileSection.style.display = 'block';
+}
+
+accountForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  // Get username from the form
+  const username = document.getElementById('username').value;
+
+  // Store the username in local storage
+  localStorage.setItem('username', username);
+
+  // Hide the account creation section and show the profile section
+  accountForm.style.display = 'none';
+  profileSection.style.display = 'block';
+
+  // Update the profile username
+  profileUsername.textContent = username;
+});
+
+// Handle profile picture upload and save to local storage
+document.getElementById('profile-pic-upload').addEventListener('change', (event) => {
+  const file = event.target.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      // Check image dimensions (if needed)
+      const img = new Image(); // Optional for image size check
+      img.src = e.target.result;
+      img.onload = () => {
+        if (img.width > 400 || img.height > 400) {
+          alert('Image dimensions must be 400x400.');
+          return;
+        }
+                if (img.width < 400 || img.height < 400) {
+          alert('Image dimensions must be 400x400.');
+          return;
+        }
+
+        // Upload the image (if necessary)
+        profilePic.src = e.target.result;
+        localStorage.setItem('profilePic', e.target.result);
+      };
+    };
+    reader.readAsDataURL(file);
+  } else {
+    console.log('No file selected.');
+  }
+});
+
+// Handle logout button click (assuming this exists)
+logoutButton.addEventListener('click', () => {
+  // Clear local storage (or perform other logout actions)
+  localStorage.removeItem('username');
+  localStorage.removeItem('profilePic');
+
+  // Redirect to the login page (or show the login form)
+  window.location.href = 'login.html'; // Replace 'login.html' with your actual login page URL
+});
+
+</script>
+</body>
+</html>
