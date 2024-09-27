@@ -82,12 +82,12 @@ document.getElementById('profile-pic-upload').addEventListener('change', (event)
       const img = new Image(); // Optional for image size check
       img.src = e.target.result;
       img.onload = () => {
-        if (img.width > 400 || img.height > 400) {
-          alert('Image dimensions must be 400x400.');
+        if (img.width > 300 || img.height > 300) {
+          alert('Image dimensions must be 300x300.');
           return;
         }
-                if (img.width < 400 || img.height < 400) {
-          alert('Image dimensions must be 400x400.');
+                if (img.width < 300 || img.height < 300) {
+          alert('Image dimensions must be 300x300.');
           return;
         }
 
@@ -109,7 +109,7 @@ logoutButton.addEventListener('click', () => {
   localStorage.removeItem('profilePic');
 
   // Redirect to the login page (or show the login form)
-  window.location.href = 'login.html'; // Replace 'login.html' with your actual login page URL
+  window.location.href = 'https://thom283.github.io/UserSave/'; // Replace 'login.html' with your actual login page URL
 });
 
 </script>
